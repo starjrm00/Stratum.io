@@ -1,7 +1,7 @@
 {
-  "name": "Agar-clone",
+  "name": "Stratum.io",
   "version": "1.0.0",
-  "description": "A simple Agar.io clone",
+  "description": "A simple io game",
   "main": "server.js",
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install",

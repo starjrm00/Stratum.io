@@ -1,9 +1,9 @@
 {
-  "name": "html5gaming",
+  "name": "stratum.io",
   "version": "0.0.1",
   "description": "Minijeux",
   "authors": [
-    ""
+    "Starjrm00"
   ],
   "dependencies": {
     "traceur-compiler": "https://github.com/google/traceur-compiler.git#~1.0.0",

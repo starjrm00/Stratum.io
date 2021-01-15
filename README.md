@@ -1,9 +1,5 @@
 # Stratum.io based on HTML5_Gaming's agar.io
-[![Join the chat at https://gitter.im/villers/HTML5_Gaming](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/villers/HTML5_Gaming?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-Agar.io clone written with Socket.IO and Phaser
-
-Try online: http://mickaelvillers.me:3000/index.html
+io game written with Socket.IO and Phaser
 
 ## Installation
 #### Downloading the Dependencies
