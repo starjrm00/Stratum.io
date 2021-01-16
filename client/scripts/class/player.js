@@ -127,7 +127,8 @@ class Player {
         game.physics.arcade.moveToPointer(this.sprite, this.speed);
 
         game.debug.text('speed: ' + this.sprite.speed, 32, 120);
-        game.debug.text(this.sprite.mass, this.sprite.x - game.camera.x - 10, this.sprite.y - game.camera.y+ 5);
+        //this debug show the text on the circle
+        game.debug.text(this.sprite.num, this.sprite.x - game.camera.x - 10, this.sprite.y - game.camera.y+ 5);
 
         this.socket.emit('move_player', this.toJson());
     }
