@@ -23,7 +23,10 @@ class Enemy {
         this.sprite.num = this.enemy.num;
         this.sprite.num_mult = this.enemy.num_mult;
         this.sprite.mass = this.enemy.mass;
-        this.sprite.speed_base = 5000;
+        this.speed_max = this.enemy.speed_max;
+        this.speed_X = this.enemy.speed_X;
+        this.speed_Y = this.enemy.speed_Y;
+        this.acc = this.enemy.acc;
         this.sprite.speed = this.enemy.speed;
         this.sprite.width = this.enemy.width;
         this.sprite.height = this.enemy.height;

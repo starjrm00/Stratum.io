@@ -17,10 +17,8 @@ class Player {
         this.speed_Y = 0;
         this.acc = 5;
         this.speed = 0;
-        this.x = 0;
-        this.y = 0;
-        //this.x = this.game.world.randomX;
-        //this.y = this.game.world.randomY;
+        this.x = this.game.world.randomX;
+        this.y = this.game.world.randomY;
 
         this.generateSprite();
     }
@@ -135,7 +133,8 @@ class Player {
     }
 
     update(game){
-        var cursors = game.input.keyboard.createCursorKeys()
+        var cursors = game.input.keyboard.createCursorKeys();
+        var EKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
         if(cursors.left.isDown && cursors.up.isDown){
             this.sprite.speedX = this.sprite.speedX - this.sprite.acc / Math.pow(2, 0.5);
             this.sprite.speedY = this.sprite.speedY - this.sprite.acc / Math.pow(2, 0.5);
@@ -181,6 +180,12 @@ class Player {
         }
         game.physics.arcade.moveToXY(this.sprite, this.sprite.x+this.sprite.speedX, this.sprite.y+this.sprite.speedY, this.sprite.speed);
         
+        this.sprite.num = this.sprite.num * 0.9999;
+
+         if(EKey.isDown){
+            this.sprite.num = this.sprite.num * 0.995
+         }
+
         game.debug.text('new_speed: ' + new_speed, 32, 200);
         game.debug.text('new_speed_max: ' + this.sprite.speed_max, 32, 220);
         game.debug.text('speed_dif: ' + String(new_speed - Number(this.sprite.speed_max)), 32, 240);
@@ -190,7 +195,9 @@ class Player {
         game.debug.text(this.sprite.num, this.sprite.x - game.camera.x - 10, this.sprite.y - game.camera.y+ 5);
         this.socket.emit('move_player', this.toJson());
 
-        this.sprite.num = this.sprite.num * 0.997;
+        // if(cursors.E.isDown){
+            // this.sprite.num = this.sprite.num * 0.95;
+        // }
     }
 }
 
