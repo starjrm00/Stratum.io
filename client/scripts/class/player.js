@@ -135,17 +135,17 @@ class Player {
     update(game){
         var cursors = game.input.keyboard.createCursorKeys()
         if(cursors.left.isDown && cursors.up.isDown){
-            this.sprite.speedX = this.sprite.speedX - this.sprite.acc * Math.pow(2, 0.5);
-            this.sprite.speedY = this.sprite.speedY - this.sprite.acc * Math.pow(2, 0.5);
+            this.sprite.speedX = this.sprite.speedX - this.sprite.acc / Math.pow(2, 0.5);
+            this.sprite.speedY = this.sprite.speedY - this.sprite.acc / Math.pow(2, 0.5);
         }else if(cursors.left.isDown && cursors.down.isDown){
-            this.sprite.speedX = this.sprite.speedX - this.sprite.acc * Math.pow(2, 0.5);
-            this.sprite.speedY = this.sprite.speedY + this.sprite.acc * Math.pow(2, 0.5);
+            this.sprite.speedX = this.sprite.speedX - this.sprite.acc / Math.pow(2, 0.5);
+            this.sprite.speedY = this.sprite.speedY + this.sprite.acc / Math.pow(2, 0.5);
         }else if(cursors.right.isDown && cursors.down.isDown){
-            this.sprite.speedX = this.sprite.speedX + this.sprite.acc * Math.pow(2, 0.5);
-            this.sprite.speedY = this.sprite.speedY + this.sprite.acc * Math.pow(2, 0.5);
+            this.sprite.speedX = this.sprite.speedX + this.sprite.acc / Math.pow(2, 0.5);
+            this.sprite.speedY = this.sprite.speedY + this.sprite.acc / Math.pow(2, 0.5);
         }else if(cursors.right.isDown && cursors.up.isDown){
-            this.sprite.speedX = this.sprite.speedX + this.sprite.acc * Math.pow(2, 0.5);
-            this.sprite.speedY = this.sprite.speedY - this.sprite.acc * Math.pow(2, 0.5);
+            this.sprite.speedX = this.sprite.speedX + this.sprite.acc / Math.pow(2, 0.5);
+            this.sprite.speedY = this.sprite.speedY - this.sprite.acc / Math.pow(2, 0.5);
         }else if(cursors.left.isDown){
             this.sprite.speedX = this.sprite.speedX - this.sprite.acc;
         }else if(cursors.right.isDown){
