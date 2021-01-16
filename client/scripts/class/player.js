@@ -62,8 +62,8 @@ class Player {
     }
 
     enemyCallback(body1, body2){
-        if(body2.sprite.alive && this.sprite.mass - (this.sprite.mass * 0.2) > body2.sprite.mass){
-            this.mass += body2.sprite.mass;
+        if(body2.sprite.alive && ((body2.sprite.num < this.sprite.num && this.sprite.num < body2.sprite.num*100) || (this.sprite.num *1000 < body2.sprite.num))){
+            this.num += body2.sprite.num * body2.sprite.num_mult;
             this.speed = this.sprite.speed_base / this.sprite.mass;
             this.x = this.sprite.x;
             this.y = this.sprite.y;
@@ -75,6 +75,7 @@ class Player {
                 id: body2.sprite.id,
                 username: body2.sprite.username,
                 speed: body2.sprite.speed,
+                num: body2.sprite.num,
                 mass: body2.sprite.mass,
                 color: body2.sprite.color,
                 x: body2.sprite.x,
@@ -87,7 +88,7 @@ class Player {
             body2.sprite.kill();
             this.socket.emit('kill_player', enemy);
         }
-        else if(this.sprite.alive && body2.sprite.mass - (body2.sprite.mass * 0.2) > this.sprite.mass){
+        else if(this.sprite.alive && ((this.sprite.num < body2.sprite.num && body2.sprite.num < this.sprite.num*100)||(body2.sprite.num * 1000 < this.sprite.num))){
             this.sprite.kill();
             this.socket.emit('kill_player', this.toJson());
         }
