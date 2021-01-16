@@ -179,14 +179,8 @@ class Player {
             game.debug.text("no cut", 32, 300);
             this.sprite.speed = new_speed;
         }
-        if(cursors.left.isDown || cursors.up.isDown || cursors.right.isDown || cursors.down.isDown){
-            game.debug.text("move by keyboard", 32, 400);
-            game.physics.arcade.moveToXY(this.sprite, this.sprite.x+this.sprite.speedX, this.sprite.y+this.sprite.speedY, this.sprite.speed);
-        }
-        else {
-            game.debug.text("move by mouse", 32, 400);
-            game.physics.arcade.moveToPointer(this.sprite, this.sprite.speed);
-        }
+        game.physics.arcade.moveToXY(this.sprite, this.sprite.x+this.sprite.speedX, this.sprite.y+this.sprite.speedY, this.sprite.speed);
+        
         game.debug.text('new_speed: ' + new_speed, 32, 200);
         game.debug.text('new_speed_max: ' + this.sprite.speed_max, 32, 220);
         game.debug.text('speed_dif: ' + String(new_speed - Number(this.sprite.speed_max)), 32, 240);
