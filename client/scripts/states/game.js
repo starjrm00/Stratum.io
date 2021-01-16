@@ -37,6 +37,14 @@ class Game {
         this.groupEnemy.physicsBodyType = Phaser.Physics.P2JS;
 
         this.setEventHandlers(game);
+
+        this.timer = this.game.time.create(false);
+        this.timer.loop(2500, this.giveNum, this);
+        this.timer.start();
+    }
+
+    giveNum(){
+        this.game.debug.text("GIVENUM", 800, 800);
     }
 
     setEventHandlers(game){
