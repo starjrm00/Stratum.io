@@ -189,6 +189,8 @@ class Player {
         game.debug.text('speed: ' + this.sprite.speed, 32, 180);
         game.debug.text(this.sprite.num, this.sprite.x - game.camera.x - 10, this.sprite.y - game.camera.y+ 5);
         this.socket.emit('move_player', this.toJson());
+
+        this.sprite.num = this.sprite.num * 0.997;
     }
 }
 
