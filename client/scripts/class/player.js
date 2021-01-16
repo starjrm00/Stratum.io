@@ -10,6 +10,7 @@ class Player {
         this.id = socket.io.engine.id;
         this.color = this.generateColor();
         this.num = Util.randomInt(1, 50)
+        this.num_mult = 0.3;
         this.mass = 20;
         this.speed_base = 5000;
         this.speed = this.speed_base / this.mass;
@@ -30,6 +31,7 @@ class Player {
         this.sprite.id = this.id;
         this.sprite.color = this.color;
         this.sprite.num = this.num;
+        this.sprite.num_mult = this.num_mult;
         this.sprite.mass = this.mass;
         this.sprite.speed_base = 5000;
         this.sprite.speed = this.sprite.speed_base / this.sprite.mass;
@@ -63,7 +65,7 @@ class Player {
 
     enemyCallback(body1, body2){
         if(body2.sprite.alive && ((body2.sprite.num < this.sprite.num && this.sprite.num < body2.sprite.num*100) || (this.sprite.num *1000 < body2.sprite.num))){
-            this.num += body2.sprite.num * body2.sprite.num_mult;
+            this.num += Math.floor(body2.sprite.num * body2.sprite.num_mult);
             this.speed = this.sprite.speed_base / this.sprite.mass;
             this.x = this.sprite.x;
             this.y = this.sprite.y;
