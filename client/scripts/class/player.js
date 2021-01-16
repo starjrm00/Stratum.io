@@ -127,12 +127,38 @@ class Player {
     }
 
     update(game){
-        game.physics.arcade.moveToPointer(this.sprite, this.speed);
+        var cursors = game.input.keyboard.createCursorKeys()
+
+        if(cursors.left.isDown && cursors.up.isDown) {
+            game.physics.arcade.moveToXY(this.sprite, this.sprite.x-1, this.sprite.y-1, this.sprite.speed);
+        }
+        else if(cursors.right.isDown && cursors.up.isDown) {
+            game.physics.arcade.moveToXY(this.sprite, this.sprite.x+1, this.sprite.y-1, this.sprite.speed);
+        }
+        else if(cursors.left.isDown && cursors.down.isDown) {
+            game.physics.arcade.moveToXY(this.sprite, this.sprite.x-1, this.sprite.y+1, this.sprite.speed);
+        }
+        else if(cursors.right.isDown && cursors.down.isDown) {
+            game.physics.arcade.moveToXY(this.sprite, this.sprite.x+1, this.sprite.y+1, this.sprite.speed);
+        }
+        else if(cursors.left.isDown) {
+            game.physics.arcade.moveToXY(this.sprite, this.sprite.x-1, this.sprite.y, this.sprite.speed);
+        }
+        else if(cursors.right.isDown) {
+            game.physics.arcade.moveToXY(this.sprite, this.sprite.x+1, this.sprite.y, this.sprite.speed);
+        }
+        else if(cursors.up.isDown) {
+            game.physics.arcade.moveToXY(this.sprite, this.sprite.x, this.sprite.y-1, this.sprite.speed);
+        }
+        else if(cursors.down.isDown) {
+            game.physics.arcade.moveToXY(this.sprite, this.sprite.x, this.sprite.y+1, this.sprite.speed);
+        }
+        else {
+            game.physics.arcade.moveToPointer(this.sprite, this.speed);
+        }
 
         game.debug.text('speed: ' + this.sprite.speed, 32, 120);
-        //this debug show the text on the circle
-        game.debug.text(this.sprite.num, this.sprite.x - game.camera.x - 10, this.sprite.y - game.camera.y+ 5);
-
+        game.debug.text(this.sprite.mass, this.sprite.x - game.camera.x - 10, this.sprite.y - game.camera.y+ 5);
         this.socket.emit('move_player', this.toJson());
     }
 }
