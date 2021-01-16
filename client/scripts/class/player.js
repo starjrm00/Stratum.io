@@ -15,10 +15,12 @@ class Player {
         this.speed_max = 400;
         this.speed_X = 0;
         this.speed_Y = 0;
-        this.acc = 30;
+        this.acc = 5;
         this.speed = 0;
-        this.x = this.game.world.randomX;
-        this.y = this.game.world.randomY;
+        this.x = 0;
+        this.y = 0;
+        //this.x = this.game.world.randomX;
+        //this.y = this.game.world.randomY;
 
         this.generateSprite();
     }
@@ -154,6 +156,17 @@ class Player {
             this.sprite.speedY = this.sprite.speedY - this.sprite.acc;
         }else if(cursors.down.isDown){
             this.sprite.speedY = this.sprite.speedY + this.sprite.acc;
+        }else{
+            var mousePosX = this.game.input.activePointer.worldX;
+            var mousePosY = this.game.input.activePointer.worldY;
+            var _X = this.sprite.x;
+            var _Y = this.sprite.y;
+            var angle = Math.atan2(mousePosY - _Y, mousePosX - _X);
+            game.debug.text("angle " + angle, 32, 320);
+            game.debug.text("5 * " +Math.cos(angle) + " = " + this.sprite.acc * Math.cos(angle), 32, 340);
+            game.debug.text("5 * " + Math.sin(angle) + " = " + this.sprite.acc * Math.sin(angle), 32, 360);
+            this.sprite.speedX = this.sprite.speedX + this.sprite.acc * Math.cos(angle);
+            this.sprite.speedY = this.sprite.speedY + this.sprite.acc * Math.sin(angle);
         }
         var speed_square = Math.pow(this.sprite.speedX, 2) + Math.pow(this.sprite.speedY, 2);
         var new_speed = Math.pow(speed_square, 0.5);
@@ -167,10 +180,12 @@ class Player {
             this.sprite.speed = new_speed;
         }
         if(cursors.left.isDown || cursors.up.isDown || cursors.right.isDown || cursors.down.isDown){
+            game.debug.text("move by keyboard", 32, 400);
             game.physics.arcade.moveToXY(this.sprite, this.sprite.x+this.sprite.speedX, this.sprite.y+this.sprite.speedY, this.sprite.speed);
         }
         else {
-            //game.physics.arcade.moveToPointer(this.sprite, this.speed);
+            game.debug.text("move by mouse", 32, 400);
+            game.physics.arcade.moveToPointer(this.sprite, this.sprite.speed);
         }
         game.debug.text('new_speed: ' + new_speed, 32, 200);
         game.debug.text('new_speed_max: ' + this.sprite.speed_max, 32, 220);
