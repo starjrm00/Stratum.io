@@ -20,6 +20,7 @@ class Enemy {
         this.sprite.id = this.enemy.id;
         this.sprite.username = '';
         this.sprite.color = this.enemy.color;
+        this.sprite.num = this.enemy.num;
         this.sprite.mass = this.enemy.mass;
         this.sprite.speed_base = 5000;
         this.sprite.speed = this.enemy.speed;

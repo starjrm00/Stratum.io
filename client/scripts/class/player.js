@@ -9,6 +9,7 @@ class Player {
 
         this.id = socket.io.engine.id;
         this.color = this.generateColor();
+        this.num = Util.randomInt(1, 50)
         this.mass = 20;
         this.speed_base = 5000;
         this.speed = this.speed_base / this.mass;
@@ -28,6 +29,7 @@ class Player {
 
         this.sprite.id = this.id;
         this.sprite.color = this.color;
+        this.sprite.num = this.num;
         this.sprite.mass = this.mass;
         this.sprite.speed_base = 5000;
         this.sprite.speed = this.sprite.speed_base / this.sprite.mass;
@@ -111,6 +113,7 @@ class Player {
             id: this.sprite.id,
             username: this.sprite.username,
             speed: this.sprite.speed,
+            num: this.sprite.num,
             mass: this.sprite.mass,
             color: this.sprite.color,
             x: this.sprite.x,
