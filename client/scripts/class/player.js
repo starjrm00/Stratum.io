@@ -12,8 +12,11 @@ class Player {
         this.num = Util.randomInt(1, 50)
         this.num_mult = 0.3;
         this.mass = 20;
-        this.speed_base = 5000;
-        this.speed = this.speed_base / this.mass;
+        this.speed_max = 400;
+        this.speed_X = 0;
+        this.speed_Y = 0;
+        this.acc = 30;
+        this.speed = 0;
         this.x = this.game.world.randomX;
         this.y = this.game.world.randomY;
 
@@ -33,8 +36,11 @@ class Player {
         this.sprite.num = this.num;
         this.sprite.num_mult = this.num_mult;
         this.sprite.mass = this.mass;
-        this.sprite.speed_base = 5000;
-        this.sprite.speed = this.sprite.speed_base / this.sprite.mass;
+        this.sprite.speed_max = this.speed_max;
+        this.sprite.speedX = this.speed_X;
+        this.sprite.speedY = this.speed_Y;
+        this.sprite.acc = this.acc;
+        this.sprite.speed = this.speed;
 
         this.game.camera.follow(this.sprite);
     }
@@ -128,20 +134,50 @@ class Player {
 
     update(game){
         var cursors = game.input.keyboard.createCursorKeys()
-        var dx = 0;
-        var dy = 0;
-        if(cursors.left.isDown) dx = dx-1;
-        if(cursors.right.isDown) dx = dx+1;
-        if(cursors.down.isDown) dy = dy+1;
-        if(cursors.up.isDown) dy = dy-1;
+        if(cursors.left.isDown && cursors.up.isDown){
+            this.sprite.speedX = this.sprite.speedX - this.sprite.acc * Math.pow(2, 0.5);
+            this.sprite.speedY = this.sprite.speedY - this.sprite.acc * Math.pow(2, 0.5);
+        }else if(cursors.left.isDown && cursors.down.isDown){
+            this.sprite.speedX = this.sprite.speedX - this.sprite.acc * Math.pow(2, 0.5);
+            this.sprite.speedY = this.sprite.speedY + this.sprite.acc * Math.pow(2, 0.5);
+        }else if(cursors.right.isDown && cursors.down.isDown){
+            this.sprite.speedX = this.sprite.speedX + this.sprite.acc * Math.pow(2, 0.5);
+            this.sprite.speedY = this.sprite.speedY + this.sprite.acc * Math.pow(2, 0.5);
+        }else if(cursors.right.isDown && cursors.up.isDown){
+            this.sprite.speedX = this.sprite.speedX + this.sprite.acc * Math.pow(2, 0.5);
+            this.sprite.speedY = this.sprite.speedY - this.sprite.acc * Math.pow(2, 0.5);
+        }else if(cursors.left.isDown){
+            this.sprite.speedX = this.sprite.speedX - this.sprite.acc;
+        }else if(cursors.right.isDown){
+            this.sprite.speedX = this.sprite.speedX + this.sprite.acc;
+        }else if(cursors.up.isDown){
+            this.sprite.speedY = this.sprite.speedY - this.sprite.acc;
+        }else if(cursors.down.isDown){
+            this.sprite.speedY = this.sprite.speedY + this.sprite.acc;
+        }
+        var speed_square = Math.pow(this.sprite.speedX, 2) + Math.pow(this.sprite.speedY, 2);
+        var new_speed = Math.pow(speed_square, 0.5);
+        if(Number(this.sprite.speed_max) < new_speed){
+            game.debug.text("cut " + this.sprite.speed + " / " + new_speed, 32, 300);
+            this.sprite.speedX = Number(this.sprite.speedX) * Number(this.sprite.speed_max) / new_speed;
+            this.sprite.speedY = Number(this.sprite.speedY) * Number(this.sprite.speed_max) / new_speed;
+            this.sprite.speed = this.sprite.speed_max;
+        }else{
+            game.debug.text("no cut", 32, 300);
+            this.sprite.speed = new_speed;
+        }
         if(cursors.left.isDown || cursors.up.isDown || cursors.right.isDown || cursors.down.isDown){
-            game.physics.arcade.moveToXY(this.sprite, this.sprite.x+dx, this.sprite.y+dy, this.sprite.speed);
+            game.physics.arcade.moveToXY(this.sprite, this.sprite.x+this.sprite.speedX, this.sprite.y+this.sprite.speedY, this.sprite.speed);
         }
         else {
-            game.physics.arcade.moveToPointer(this.sprite, this.speed);
+            //game.physics.arcade.moveToPointer(this.sprite, this.speed);
         }
-
-        game.debug.text('speed: ' + this.sprite.speed, 32, 120);
+        game.debug.text('new_speed: ' + new_speed, 32, 200);
+        game.debug.text('new_speed_max: ' + this.sprite.speed_max, 32, 220);
+        game.debug.text('speed_dif: ' + String(new_speed - Number(this.sprite.speed_max)), 32, 240);
+        game.debug.text('speedX: ' + this.sprite.speedX, 32, 120);
+        game.debug.text('speedY: ' + this.sprite.speedY, 32, 160);
+        game.debug.text('speed: ' + this.sprite.speed, 32, 180);
         game.debug.text(this.sprite.num, this.sprite.x - game.camera.x - 10, this.sprite.y - game.camera.y+ 5);
         this.socket.emit('move_player', this.toJson());
     }
