@@ -88,7 +88,7 @@ class Player {
             this.sprite.body.fixedRotation = false;
         }
         else{
-            this.sprite.body.setCircle(this.sprite.width / 2);
+            this.sprite.body.setRectangle(this.sprite.width / 2, this.sprite.height / 2);
             this.sprite.body.fixedRotation = false;
         }
         this.sprite.body.setCollisionGroup(this.groupColision[0]);

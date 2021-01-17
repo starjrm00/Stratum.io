@@ -10,7 +10,6 @@ class Enemy {
     }
 
     generateSprite(){
-        alert("enemy char" + this.enemy.char)
         if(this.enemy.char == 1) var bmd = this.generateCircle(this.enemy.color);
         else if(this.enemy.char == 2) var bmd = this.generateSquare(this.enemy.color);
 
@@ -44,17 +43,19 @@ class Enemy {
         return bmd;
     }
 
+    generateSquare(color){
+        var bitmapSize = this.enemy.mass * 2
+        var bmd = this.game.add.bitmapData(bitmapSize, bitmapSize);
+        bmd.ctx.fillStyle = color;
+        bmd.ctx.beginPath();
+        bmd.ctx.rect(this.enemy.mass* 1.77 / 2, this.enemy.mass* 1.77 / 2, this.enemy.mass * 1.77, this.enemy.mass * 1.77);
+        bmd.ctx.fill();
+        return bmd;
+    }
+
     setColision(){
         this.sprite.body.static = true;
         this.sprite.body.setCircle(this.sprite.width / 2);
-        this.sprite.body.fixedRotation = false;
-        this.sprite.body.setCollisionGroup(this.groupColision[1]);
-        this.sprite.body.collides([this.groupColision[0], this.groupColision[2]]);
-    }
-
-    setSquareColision(){
-        this.sprite.body.static = true;
-        this.sprite.body.setSize(this.sprite.width, this.sprite.height);
         this.sprite.body.fixedRotation = false;
         this.sprite.body.setCollisionGroup(this.groupColision[1]);
         this.sprite.body.collides([this.groupColision[0], this.groupColision[2]]);

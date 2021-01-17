@@ -67,7 +67,6 @@ class Game {
 
             // new player
             this.socket.on('new_player', (enemy) => {
-                alert("new player come")
                 this.players[enemy.id] = new Enemy(game, enemy, this.groupColision);
             });
 
