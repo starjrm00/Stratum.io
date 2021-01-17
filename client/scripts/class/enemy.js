@@ -10,10 +10,12 @@ class Enemy {
     }
 
     generateSprite(){
-        var bmd = this.generateCircle(this.enemy.color);
+        alert("enemy char" + this.enemy.char)
+        if(this.enemy.char == 1) var bmd = this.generateCircle(this.enemy.color);
+        else if(this.enemy.char == 2) var bmd = this.generateSquare(this.enemy.color);
 
         this.sprite = this.game.add.sprite(this.enemy.x, this.enemy.y, bmd);
-        this.game.physics.p2.enable(this.sprite, false);
+        this.game.physics.p2.enable(this.sprite, Phaser.Physics.ARCADE);
 
         this.setColision();
 
@@ -38,7 +40,6 @@ class Enemy {
         bmd.ctx.fillStyle = color;
         bmd.ctx.beginPath();
         bmd.ctx.arc(this.enemy.mass, this.enemy.mass, this.enemy.mass, 0, Math.PI*2, true);
-        bmd.ctx.closePath();
         bmd.ctx.fill();
         return bmd;
     }
@@ -46,6 +47,14 @@ class Enemy {
     setColision(){
         this.sprite.body.static = true;
         this.sprite.body.setCircle(this.sprite.width / 2);
+        this.sprite.body.fixedRotation = false;
+        this.sprite.body.setCollisionGroup(this.groupColision[1]);
+        this.sprite.body.collides([this.groupColision[0], this.groupColision[2]]);
+    }
+
+    setSquareColision(){
+        this.sprite.body.static = true;
+        this.sprite.body.setSize(this.sprite.width, this.sprite.height);
         this.sprite.body.fixedRotation = false;
         this.sprite.body.setCollisionGroup(this.groupColision[1]);
         this.sprite.body.collides([this.groupColision[0], this.groupColision[2]]);

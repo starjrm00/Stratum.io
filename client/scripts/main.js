@@ -2,6 +2,7 @@ import Boot from 'scripts/states/boot';
 import Preload from 'scripts/states/preload';
 import Menu from 'scripts/states/menu';
 import Game from 'scripts/states/game';
+import Select from 'scripts/states/select';
 
 class Games extends Phaser.Game {
     constructor() {
@@ -16,6 +17,7 @@ class Games extends Phaser.Game {
         this.state.add('preload', Preload);
         this.state.add('menu', Menu);
         this.state.add('game', Game);
+        this.state.add('select', Select);
 
         this.state.start('boot');
     }

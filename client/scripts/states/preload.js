@@ -2,7 +2,6 @@
 
 class Preload {
     preload(game) {
-
         // Add preload sprite
         var tmpPreload = this.game.cache.getImage('preloader');
         this.loadingSprite = this.add.sprite(
@@ -18,6 +17,15 @@ class Preload {
         // Load game assets here
         this.load.image('logo', 'assets/logo.png');
         this.load.image('grid', 'assets/grid.jpeg');
+
+        this.load.image('char1', 'assets/character_1.png');
+        this.load.image('char2', 'assets/character_2.png');
+        this.load.image('char3', 'assets/character_3.png');
+        this.load.image('bgSelect', 'assets/select.png');
+
+        this.game.load.spritesheet('btn1', 'assets/circle.png', 1000, 1000)
+        this.game.load.spritesheet('btn2', 'assets/square.png', 1000, 1000)
+
 
         game.time.advancedTiming = true;
     }

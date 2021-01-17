@@ -6,6 +6,7 @@ import Particules from 'scripts/class/particles';
 
 class Game {
     create(game) {
+
         this.socket = io.connect(window.location.host);
         this.players = [];
         this.particules = [];
@@ -41,6 +42,7 @@ class Game {
         this.timer = this.game.time.create(false);
         this.timer.loop(2500, this.giveNum, this);
         this.timer.start();
+
     }
 
     giveNum(){
@@ -65,6 +67,7 @@ class Game {
 
             // new player
             this.socket.on('new_player', (enemy) => {
+                alert("new player come")
                 this.players[enemy.id] = new Enemy(game, enemy, this.groupColision);
             });
 
