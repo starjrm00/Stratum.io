@@ -17,9 +17,9 @@ class Items {
 
         this.sprite.id = this.item.id;
         this.sprite.effect = this.item.effect;
-        // if(this.sprite.effect == "inc_num"){
+        if(this.sprite.effect == "inc_num"){
             this.sprite.inc_num = this.item.inc_num;
-        // }
+        }
     }
 
     generateCircle(color){

@@ -98,7 +98,7 @@ class Player {
 
     enemyCallback(body1, body2){
         if(body2.sprite.alive && ((body2.sprite.num < this.sprite.num && this.sprite.num < body2.sprite.num*100) || (this.sprite.num *1000 < body2.sprite.num))){
-            this.num += Math.floor(body2.sprite.num * body2.sprite.num_mult);
+            this.num = this.num + Math.floor(body2.sprite.num * body2.sprite.num_mult);
             this.speed = this.sprite.speed;
             this.speedX = this.sprite.speedX;
             this.speedY = this.sprite.speedY;
@@ -112,9 +112,14 @@ class Player {
                 id: body2.sprite.id,
                 username: body2.sprite.username,
                 speed: body2.sprite.speed,
+                speed_max: body2.sprite.speed_max,
+                speedX: body2.sprite.speedX,
+                speedY: body2.sprite.speedY,
+                acc: body2.sprite.acc,
                 num: body2.sprite.num,
-                mass: body2.sprite.mass,
+                num_mult: body2.sprite.num_mult,
                 color: body2.sprite.color,
+                mass: body2.sprite.mass,
                 x: body2.sprite.x,
                 y: body2.sprite.y,
                 height: body2.sprite.height,
@@ -141,9 +146,9 @@ class Player {
             this.x = this.sprite.x;
             this.y = this.sprite.y;
 
-            //if(body2.sprite.effect == "inc_num"){
+            if(body2.sprite.effect == "inc_num"){
                 this.num = this.num + body2.sprite.inc_num
-            //}
+            }
 
             this.sprite.kill();
             this.generateSprite();
@@ -158,17 +163,23 @@ class Player {
             id: this.sprite.id,
             username: this.sprite.username,
             speed: this.sprite.speed,
+            speed_max: this.sprite.speed_max,
+            speedX: this.sprite.speedX,
+            speedY: this.sprite.speedY,
+            acc: this.sprite.acc,
             num: this.sprite.num,
+            num_mult: this.sprite.num_mult,
             mass: this.sprite.mass,
             color: this.sprite.color,
             x: this.sprite.x,
             y: this.sprite.y,
             height: this.sprite.height,
             width: this.sprite.width,
+            killed: this.sprite.killed,
             char: this.sprite.char      //
         };
     }
-
+    
     update(game){
         var cursors = game.input.keyboard.createCursorKeys();
         var EKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
