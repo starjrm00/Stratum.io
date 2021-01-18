@@ -1,25 +1,22 @@
-/**
- * Created by viller_m on 19/05/15.
- */
-class Particles {
-    constructor(game, particle, groupColision, groupParticles) {
+class Items {
+    constructor(game, item, groupColision, groupItems) {
         this.game = game;
-        this.particle = particle;
+        this.item = item;
         this.groupColision = groupColision;
-        this.groupParticles = groupParticles;
+        this.groupItems = groupItems;
         this.generateSprite();
     }
 
     generateSprite(){
-        var bmd = this.generateCircle(this.particle.color);
+        var bmd = this.generateCircle(this.item.color);
 
-        this.sprite = this.game.add.sprite(this.particle.x, this.particle.y, bmd);
+        this.sprite = this.game.add.sprite(this.item.x, this.item.y, bmd);
         this.game.physics.p2.enable(this.sprite, false);
 
         this.setColision();
 
-        this.sprite.id = this.particle.id;
-        this.sprite.mass = this.particle.mass;
+        this.sprite.id = this.item.id;
+        this.sprite.mass = this.item.mass;
     }
 
     generateCircle(color){
@@ -40,13 +37,13 @@ class Particles {
         this.sprite.body.collides([this.groupColision[0], this.groupColision[1]]);
     }
 
-    move(particle){
+    move(item){
         if(this.sprite.alive){
             this.sprite.kill();
         }
-        this.particle = particle;
+        this.item = item;
         this.generateSprite();
     }
 }
 
-export default Particles;
+export default Items;

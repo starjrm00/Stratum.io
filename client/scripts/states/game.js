@@ -2,14 +2,14 @@
 
 import Enemy from 'scripts/class/enemy';
 import Player from 'scripts/class/player';
-import Particles from 'scripts/class/particles';
+import Items from 'scripts/class/items';
 
 class Game {
     create(game) {
 
         this.socket = io.connect(window.location.host);
         this.players = [];
-        this.particles = [];
+        this.items = [];
 
         this.color = ['#999999', '#CCCCCC', '#00FF00', '#0000FF', '#FF0000', '#FFFF00'];
 
@@ -25,13 +25,13 @@ class Game {
 
         var groupPlayer = game.physics.p2.createCollisionGroup();
         var groupPlayers = game.physics.p2.createCollisionGroup();
-        var groupParticle = game.physics.p2.createCollisionGroup();
-        this.groupColision = [groupPlayer, groupPlayers, groupParticle];
+        var groupItem = game.physics.p2.createCollisionGroup();
+        this.groupColision = [groupPlayer, groupPlayers, groupItem];
         game.physics.p2.updateBoundsCollisionGroup();
 
-        this.groupParticles = game.add.group();
-        this.groupParticles.enableBody = true;
-        this.groupParticles.physicsBodyType = Phaser.Physics.P2JS;
+        this.groupItems = game.add.group();
+        this.groupItems.enableBody = true;
+        this.groupItems.physicsBodyType = Phaser.Physics.P2JS;
 
         this.groupEnemy = game.add.group();
         this.groupEnemy.enableBody = true;
@@ -54,15 +54,15 @@ class Game {
             this.player = new Player(game, this.socket, this.groupColision);
             this.socket.emit('new_player', this.player.toJson());
 
-            // particles
-            this.socket.on('getParticles', (particles) => {
-                for (var particle of particles) {
-                    this.particles[particle.id] = new Particles(game, particle, this.groupColision);
+            // items
+            this.socket.on('getItems', (items) => {
+                for (var item of items) {
+                    this.items[item.id] = new Items(game, item, this.groupColision);
                 }
             });
 
-            this.socket.on('update_particles', (particle) => {
-                this.particles[particle.id].move(particle);
+            this.socket.on('update_items', (item) => {
+                this.items[item.id].move(item);
             });
 
             // new player

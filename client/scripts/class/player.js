@@ -93,7 +93,7 @@ class Player {
         }
         this.sprite.body.setCollisionGroup(this.groupColision[0]);
         this.sprite.body.collides(this.groupColision[1], this.enemyCallback, this);
-        this.sprite.body.collides(this.groupColision[2], this.particlesCallback, this);
+        this.sprite.body.collides(this.groupColision[2], this.itemsCallback, this);
     }
 
     enemyCallback(body1, body2){
@@ -132,7 +132,7 @@ class Player {
         }
     }
 
-    particlesCallback(body1, body2){
+    itemsCallback(body1, body2){
         if(body2.sprite.alive){
             this.num = this.sprite.num;
             this.speed = this.sprite.speed;
@@ -145,7 +145,7 @@ class Player {
             this.generateSprite();
 
             body2.sprite.kill();
-            this.socket.emit('update_particles', body2.sprite.id);
+            this.socket.emit('update_items', body2.sprite.id);
         }
     }
 
