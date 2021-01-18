@@ -10,19 +10,48 @@ app.get('/', function(req, res){
 
 var color = ['#999999', '#CCCCCC', '#00FF00', '#0000FF', '#FF0000', '#FFFF00'];
 var users = [];
-var nbItem = 500;
+var nbItem = 80;
 var items = [];
 
 for (var i = 0; i < nbItem; i++)
 {
-    items[i] = {
-        x: randomIntInc(0, 3000),
-        y: randomIntInc(0, 3000),
-        color: color[randomIntInc(0, 5)],
-        id: i,
-        effect: "inc_num",
-        inc_num: 30
-    };
+    if(i*4 < nbItem){
+        items[i] = {
+            x: randomIntInc(0, 3000),
+            y: randomIntInc(0, 3000),
+            color: color[randomIntInc(0, 5)],
+            id: i,
+            effect: "inc_num",
+            inc_num: 30
+        };
+    }else if(i*4 < nbItem*2){
+        items[i] = {
+            x: randomIntInc(0, 3000),
+            y: randomIntInc(0, 3000),
+            color: color[randomIntInc(0, 5)],
+            id: i,
+            effect: "inc_sp_m",
+            inc_sp_m: 3
+        };
+    }else if(i*4 < nbItem*3){
+        items[i] = {
+            x: randomIntInc(0, 3000),
+            y: randomIntInc(0, 3000),
+            color: color[randomIntInc(0, 5)],
+            id: i,
+            effect: "inc_acc_m",
+            inc_acc_m: 3
+        };
+    }else{
+        items[i] = {
+            x: randomIntInc(0, 3000),
+            y: randomIntInc(0, 3000),
+            color: color[randomIntInc(0, 5)],
+            id: i,
+            effect: "dec_mass",
+            dec_mass: 0.9
+        };
+    }
 }
 
 io.on('connection', function(socket){

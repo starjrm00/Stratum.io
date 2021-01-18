@@ -20,6 +20,15 @@ class Items {
         if(this.sprite.effect == "inc_num"){
             this.sprite.inc_num = this.item.inc_num;
         }
+        if(this.sprite.effect == "inc_sp_m"){
+            this.sprite.inc_sp_m = this.item.inc_sp_m;
+        }
+        if(this.sprite.effect == "inc_acc_m"){
+            this.sprite.inc_acc_m = this.item.inc_acc_m;
+        }
+        if(this.sprite.effect == "dec_mass"){
+            this.sprite.dec_mass = this.item.dec_mass;
+        }
     }
 
     generateCircle(color){

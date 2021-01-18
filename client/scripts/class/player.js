@@ -13,10 +13,10 @@ class Player {
         this.num = Util.randomInt(1, 50)
         this.num_mult = 0.3;
         this.mass = 20;
-        this.speed_max = 400;
+        this.speed_max = 300;
         this.speedX = 0;
         this.speedY = 0;
-        this.acc = 5;
+        this.acc = 10;
         this.speed = 0;
         this.x = this.game.world.randomX;
         this.y = this.game.world.randomY;
@@ -149,6 +149,15 @@ class Player {
             if(body2.sprite.effect == "inc_num"){
                 this.num = this.num + body2.sprite.inc_num
             }
+            if(body2.sprite.effect == "inc_sp_m"){
+                this.speed_max = this.speed_max + body2.sprite.inc_sp_m;
+            }
+            if(body2.sprite.effect == "inc_acc_m"){
+                this.acc = this.acc + body2.sprite.inc_acc_m;
+            }
+            if(body2.sprite.effect == "dec_mass"){
+                this.mass = this.mass * body2.sprite.dec_mass;
+            }
 
             this.sprite.kill();
             this.generateSprite();
@@ -179,7 +188,7 @@ class Player {
             char: this.sprite.char      //
         };
     }
-    
+
     update(game){
         var cursors = game.input.keyboard.createCursorKeys();
         var EKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
