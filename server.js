@@ -10,12 +10,12 @@ app.get('/', function(req, res){
 
 var color = ['#999999', '#CCCCCC', '#00FF00', '#0000FF', '#FF0000', '#FFFF00'];
 var users = [];
-var nbParticule = 250;
-var particules = [];
+var nbParticle = 50;
+var particles = [];
 
-for (var i = 0; i < nbParticule; i++)
+for (var i = 0; i < nbParticle; i++)
 {
-    particules[i] = {
+    particles[i] = {
         x: randomIntInc(0, 3000),
         y: randomIntInc(0, 3000),
         color: color[randomIntInc(0, 5)],
@@ -29,7 +29,7 @@ io.on('connection', function(socket){
 
     socket.on('new_player', function(user){
         me = user;
-        socket.emit('getParticules', particules);
+        socket.emit('getParticles', particles);
 
         for (var k in users){
             socket.emit('new_player', users[k]);
@@ -40,14 +40,14 @@ io.on('connection', function(socket){
     });
 
     socket.on('update_particles', function(id){
-        particules[id] = {
+        particles[id] = {
             x: randomIntInc(0, 3000),
             y: randomIntInc(0, 3000),
             color: color[randomIntInc(0, 5)],
             id: id,
             mass: 1
         };
-        io.emit('update_particles', particules[id]);
+        io.emit('update_particles', particles[id]);
     });
 
     socket.on('move_player', function(user){

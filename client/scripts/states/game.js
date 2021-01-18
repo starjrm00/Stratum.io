@@ -2,14 +2,14 @@
 
 import Enemy from 'scripts/class/enemy';
 import Player from 'scripts/class/player';
-import Particules from 'scripts/class/particles';
+import Particles from 'scripts/class/particles';
 
 class Game {
     create(game) {
 
         this.socket = io.connect(window.location.host);
         this.players = [];
-        this.particules = [];
+        this.particles = [];
 
         this.color = ['#999999', '#CCCCCC', '#00FF00', '#0000FF', '#FF0000', '#FFFF00'];
 
@@ -25,13 +25,13 @@ class Game {
 
         var groupPlayer = game.physics.p2.createCollisionGroup();
         var groupPlayers = game.physics.p2.createCollisionGroup();
-        var groupParticule = game.physics.p2.createCollisionGroup();
-        this.groupColision = [groupPlayer, groupPlayers, groupParticule];
+        var groupParticle = game.physics.p2.createCollisionGroup();
+        this.groupColision = [groupPlayer, groupPlayers, groupParticle];
         game.physics.p2.updateBoundsCollisionGroup();
 
-        this.groupParticules = game.add.group();
-        this.groupParticules.enableBody = true;
-        this.groupParticules.physicsBodyType = Phaser.Physics.P2JS;
+        this.groupParticles = game.add.group();
+        this.groupParticles.enableBody = true;
+        this.groupParticles.physicsBodyType = Phaser.Physics.P2JS;
 
         this.groupEnemy = game.add.group();
         this.groupEnemy.enableBody = true;
@@ -54,15 +54,15 @@ class Game {
             this.player = new Player(game, this.socket, this.groupColision);
             this.socket.emit('new_player', this.player.toJson());
 
-            // particules
-            this.socket.on('getParticules', (particles) => {
+            // particles
+            this.socket.on('getParticles', (particles) => {
                 for (var particle of particles) {
-                    this.particules[particle.id] = new Particules(game, particle, this.groupColision);
+                    this.particles[particle.id] = new Particles(game, particle, this.groupColision);
                 }
             });
 
             this.socket.on('update_particles', (particle) => {
-                this.particules[particle.id].move(particle);
+                this.particles[particle.id].move(particle);
             });
 
             // new player

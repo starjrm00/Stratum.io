@@ -93,7 +93,7 @@ class Player {
         }
         this.sprite.body.setCollisionGroup(this.groupColision[0]);
         this.sprite.body.collides(this.groupColision[1], this.enemyCallback, this);
-        this.sprite.body.collides(this.groupColision[2], this.particulesCallback, this);
+        this.sprite.body.collides(this.groupColision[2], this.particlesCallback, this);
     }
 
     enemyCallback(body1, body2){
@@ -130,7 +130,7 @@ class Player {
         }
     }
 
-    particulesCallback(body1, body2){
+    particlesCallback(body1, body2){
         if(body2.sprite.alive){
             this.mass += body2.sprite.mass;
             this.speed = this.sprite.speed_base / this.sprite.mass;

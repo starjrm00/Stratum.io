@@ -1,25 +1,25 @@
 /**
  * Created by viller_m on 19/05/15.
  */
-class Particules {
-    constructor(game, particule, groupColision, groupParticules) {
+class Particles {
+    constructor(game, particle, groupColision, groupParticles) {
         this.game = game;
-        this.particule = particule;
+        this.particle = particle;
         this.groupColision = groupColision;
-        this.groupParticules = groupParticules;
+        this.groupParticles = groupParticles;
         this.generateSprite();
     }
 
     generateSprite(){
-        var bmd = this.generateCircle(this.particule.color);
+        var bmd = this.generateCircle(this.particle.color);
 
-        this.sprite = this.game.add.sprite(this.particule.x, this.particule.y, bmd);
+        this.sprite = this.game.add.sprite(this.particle.x, this.particle.y, bmd);
         this.game.physics.p2.enable(this.sprite, false);
 
         this.setColision();
 
-        this.sprite.id = this.particule.id;
-        this.sprite.mass = this.particule.mass;
+        this.sprite.id = this.particle.id;
+        this.sprite.mass = this.particle.mass;
     }
 
     generateCircle(color){
@@ -44,9 +44,9 @@ class Particules {
         if(this.sprite.alive){
             this.sprite.kill();
         }
-        this.particule = particle;
+        this.particle = particle;
         this.generateSprite();
     }
 }
 
-export default Particules;
+export default Particles;
