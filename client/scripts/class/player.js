@@ -20,7 +20,8 @@ class Player {
         this.speed = 0;
         this.x = this.game.world.randomX;
         this.y = this.game.world.randomY;
-        this.char = game.char
+        this.char = game.char;
+        this.time = 180;
 
         //this.game.char = game.char
 
@@ -49,7 +50,8 @@ class Player {
         this.sprite.acc = this.acc;
         this.sprite.speed = this.speed;
         
-        this.sprite.char = this.char    //
+        this.sprite.char = this.char;    //
+        this.sprite.time = this.time;
 
         this.game.camera.follow(this.sprite);
     }
@@ -104,6 +106,7 @@ class Player {
             this.speedY = this.sprite.speedY;
             this.x = this.sprite.x;
             this.y = this.sprite.y;
+            this.time = this.sprite.time;
 
             this.sprite.kill();
             this.generateSprite();
@@ -125,7 +128,8 @@ class Player {
                 height: body2.sprite.height,
                 width: body2.sprite.width,
                 killed: body2.sprite.killed,
-                char : body2.sprite.char    //
+                char: body2.sprite.char,    //
+                time: body2.sprite.time
             };
 
             body2.sprite.kill();
@@ -145,9 +149,10 @@ class Player {
             this.speedY = this.sprite.speedY;
             this.x = this.sprite.x;
             this.y = this.sprite.y;
+            this.time = this.sprite.time;
 
             if(body2.sprite.effect == "inc_num"){
-                this.num = this.num + body2.sprite.inc_num
+                this.num = this.num + body2.sprite.inc_num;
             }
             if(body2.sprite.effect == "inc_sp_m"){
                 this.speed_max = this.speed_max + body2.sprite.inc_sp_m;
@@ -185,34 +190,87 @@ class Player {
             height: this.sprite.height,
             width: this.sprite.width,
             killed: this.sprite.killed,
-            char: this.sprite.char      //
+            char: this.sprite.char,      //
+            time: this.sprite.time
         };
     }
 
     update(game){
-        var cursors = game.input.keyboard.createCursorKeys();
         var EKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
+        var SpaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        //this.input.keyboard.on('keyup', this.unlock.bind(this))
+        this.timer = game.time.create(false);
 
+        if(this.sprite.time >= 0 || this.sprite.time == -1000){
+            game.debug.text("Dash skill On!", this.sprite.x - game.camera.x-50, this.sprite.y - game.camera.y-50);
+        }
+        else {
+            game.debug.text("Dash cool time!", this.sprite.x - game.camera.x-50, this.sprite.y - game.camera.y-50);
+        }
+
+        if(SpaceKey.isDown){   
+            this.timer.loop(3000, this.OnSpaceTimer(), this);
+            if(this.sprite.time >=0){
+                this.move(game, 1);
+            }
+            else{ 
+                this.move(game, 0);
+            }
+//            this.keyLock == true
+        } 
+        else {
+            this.timer.loop(3000, this.OffSpaceTimer(), this);
+            this.move(game, 0);
+        }
+
+        this.sprite.num = this.sprite.num * 0.9999;
+        if(EKey.isDown){
+            this.sprite.num = this.sprite.num * 0.995;
+         }
+    }
+
+    OnSpaceTimer(){
+        if(this.sprite.time > -1000) this.sprite.time --;
+        else if(this.sprite.time <= -1000) this.sprite.time = 180
+    }
+
+    OffSpaceTimer(){
+        if(this.sprite.time > -1000) this.sprite.time --;
+    }
+
+
+
+    move(game, onOff){
+
+        if(onOff == 0){
+            var acc = this.sprite.acc
+            var MaxSpeed = this.sprite.speed_max
+        }
+        else{ 
+            var acc = 3000
+            var MaxSpeed = 1000
+        }
+        var cursors = game.input.keyboard.createCursorKeys();
         if(cursors.left.isDown && cursors.up.isDown){
-            this.sprite.speedX = this.sprite.speedX - this.sprite.acc / Math.pow(2, 0.5);
-            this.sprite.speedY = this.sprite.speedY - this.sprite.acc / Math.pow(2, 0.5);
+            this.sprite.speedX = this.sprite.speedX - acc / Math.pow(2, 0.5);
+            this.sprite.speedY = this.sprite.speedY - acc / Math.pow(2, 0.5);
         } else if(cursors.left.isDown && cursors.down.isDown){
-            this.sprite.speedX = this.sprite.speedX - this.sprite.acc / Math.pow(2, 0.5);
-            this.sprite.speedY = this.sprite.speedY + this.sprite.acc / Math.pow(2, 0.5);
+            this.sprite.speedX = this.sprite.speedX - acc / Math.pow(2, 0.5);
+            this.sprite.speedY = this.sprite.speedY + acc / Math.pow(2, 0.5);
         } else if(cursors.right.isDown && cursors.down.isDown){
-            this.sprite.speedX = this.sprite.speedX + this.sprite.acc / Math.pow(2, 0.5);
-            this.sprite.speedY = this.sprite.speedY + this.sprite.acc / Math.pow(2, 0.5);
+            this.sprite.speedX = this.sprite.speedX + acc / Math.pow(2, 0.5);
+            this.sprite.speedY = this.sprite.speedY + acc / Math.pow(2, 0.5);
         } else if(cursors.right.isDown && cursors.up.isDown){
-            this.sprite.speedX = this.sprite.speedX + this.sprite.acc / Math.pow(2, 0.5);
-            this.sprite.speedY = this.sprite.speedY - this.sprite.acc / Math.pow(2, 0.5);
+            this.sprite.speedX = this.sprite.speedX + acc / Math.pow(2, 0.5);
+            this.sprite.speedY = this.sprite.speedY - acc / Math.pow(2, 0.5);
         } else if(cursors.left.isDown){
-            this.sprite.speedX = this.sprite.speedX - this.sprite.acc;
+            this.sprite.speedX = this.sprite.speedX - acc;
         } else if(cursors.right.isDown){
-            this.sprite.speedX = this.sprite.speedX + this.sprite.acc;
+            this.sprite.speedX = this.sprite.speedX + acc;
         } else if(cursors.up.isDown){
-            this.sprite.speedY = this.sprite.speedY - this.sprite.acc;
+            this.sprite.speedY = this.sprite.speedY - acc;
         } else if(cursors.down.isDown){
-            this.sprite.speedY = this.sprite.speedY + this.sprite.acc;
+            this.sprite.speedY = this.sprite.speedY + acc;
         } else{
             var mousePosX = this.game.input.activePointer.worldX;
             var mousePosY = this.game.input.activePointer.worldY;
@@ -220,41 +278,37 @@ class Player {
             var _Y = this.sprite.y;
             var angle = Math.atan2(mousePosY - _Y, mousePosX - _X);
             game.debug.text("angle " + angle, 32, 320);
-            game.debug.text("5 * " +Math.cos(angle) + " = " + this.sprite.acc * Math.cos(angle), 32, 340);
-            game.debug.text("5 * " + Math.sin(angle) + " = " + this.sprite.acc * Math.sin(angle), 32, 360);
-            this.sprite.speedX = this.sprite.speedX + this.sprite.acc * Math.cos(angle);
-            this.sprite.speedY = this.sprite.speedY + this.sprite.acc * Math.sin(angle);
+            game.debug.text("5 * " +Math.cos(angle) + " = " + acc * Math.cos(angle), 32, 340);
+            game.debug.text("5 * " + Math.sin(angle) + " = " + acc * Math.sin(angle), 32, 360);
+            this.sprite.speedX = this.sprite.speedX + acc * Math.cos(angle);
+            this.sprite.speedY = this.sprite.speedY + acc * Math.sin(angle);
         }
 
         var speed_square = Math.pow(this.sprite.speedX, 2) + Math.pow(this.sprite.speedY, 2);
         var new_speed = Math.pow(speed_square, 0.5);
 
-        if(Number(this.sprite.speed_max) < new_speed){
+        if(Number(MaxSpeed) < new_speed){
             game.debug.text("cut " + this.sprite.speed + " / " + new_speed, 32, 300);
-            this.sprite.speedX = Number(this.sprite.speedX) * Number(this.sprite.speed_max) / new_speed;
-            this.sprite.speedY = Number(this.sprite.speedY) * Number(this.sprite.speed_max) / new_speed;
-            this.sprite.speed = this.sprite.speed_max;
+            this.sprite.speedX = Number(this.sprite.speedX) * Number(MaxSpeed) / new_speed;
+            this.sprite.speedY = Number(this.sprite.speedY) * Number(MaxSpeed) / new_speed;
+            this.sprite.speed = MaxSpeed;
         } else{
             game.debug.text("no cut", 32, 300);
             this.sprite.speed = new_speed;
         }
         game.physics.arcade.moveToXY(this.sprite, this.sprite.x+this.sprite.speedX, this.sprite.y+this.sprite.speedY, this.sprite.speed);
-        
-        this.sprite.num = this.sprite.num * 0.9999;
-
-        if(EKey.isDown){
-            this.sprite.num = this.sprite.num * 0.995
-         }
 
         game.debug.text('new_speed: ' + new_speed, 32, 200);
-        game.debug.text('new_speed_max: ' + this.sprite.speed_max, 32, 220);
         game.debug.text('speed_dif: ' + String(new_speed - Number(this.sprite.speed_max)), 32, 240);
+        game.debug.text('new_speed_max: ' + this.sprite.speed_max, 32, 220);
         game.debug.text('speedX: ' + this.sprite.speedX, 32, 120);
         game.debug.text('speedY: ' + this.sprite.speedY, 32, 160);
         game.debug.text('speed: ' + this.sprite.speed, 32, 180);
         game.debug.text(this.sprite.num, this.sprite.x - game.camera.x - 10, this.sprite.y - game.camera.y+ 5);
         this.socket.emit('move_player', this.toJson());
     }
+
+
 }
 
 export default Player;

@@ -91,7 +91,6 @@ io.on('connection', function(socket){
     socket.on('new_player', function(user){
         me = user;
         socket.emit('getItems', items);
-        console.log(me.id);
 
         for (var k in users){
             socket.emit('new_player', users[k]);
