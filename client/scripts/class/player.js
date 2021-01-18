@@ -141,6 +141,10 @@ class Player {
             this.x = this.sprite.x;
             this.y = this.sprite.y;
 
+            //if(body2.sprite.effect == "inc_num"){
+                this.num = this.num + body2.sprite.inc_num
+            //}
+
             this.sprite.kill();
             this.generateSprite();
 

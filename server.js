@@ -20,16 +20,49 @@ for (var i = 0; i < nbItem; i++)
         y: randomIntInc(0, 3000),
         color: color[randomIntInc(0, 5)],
         id: i,
-        mass: 1
+        effect: "inc_num",
+        inc_num: 30
     };
 }
 
 io.on('connection', function(socket){
     var me = false;
+    /*
+    setInterval(giveNum, 5000);
 
+    function giveNum(){
+        var empty = true
+        var mini = 0;
+        var id;
+        console.log("giveNum");
+        for(var k in users){
+            empty = false;
+            if(mini < users[k].num){
+                mini = users[k].num;
+            }
+        }
+        if(empty == false){
+            console.log("users are not empty")
+            for(var k in users){
+                if(mini >= users[k].num){
+                    mini = users[k].num;
+                    id = k;
+                    console.log("id is "+id);
+                }
+            }
+            item = {
+                id: 'inc_num',
+                inc_num: 30
+            }
+            console.log(users[id]+" + ", item);
+            socket.emit('use_item', users[id], item);
+        }
+    }
+*/
     socket.on('new_player', function(user){
         me = user;
         socket.emit('getItems', items);
+        console.log(me.id);
 
         for (var k in users){
             socket.emit('new_player', users[k]);
@@ -45,7 +78,8 @@ io.on('connection', function(socket){
             y: randomIntInc(0, 3000),
             color: color[randomIntInc(0, 5)],
             id: id,
-            mass: 1
+            effect: "inc_num",
+            inc_num: 30
         };
         io.emit('update_items', items[id]);
     });

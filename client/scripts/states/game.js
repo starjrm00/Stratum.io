@@ -39,15 +39,15 @@ class Game {
 
         this.setEventHandlers(game);
 
-        this.timer = this.game.time.create(false);
-        this.timer.loop(2500, this.giveNum, this);
-        this.timer.start();
+        // this.timer = this.game.time.create(false);
+        // this.timer.loop(2500, this.giveNum, this);
+        // this.timer.start();
 
     }
 
-    giveNum(){
-        this.game.debug.text("GIVENUM", 800, 800);
-    }
+    // giveNum(){
+        // this.game.debug.text("GIVENUM", 800, 800);
+    // }
 
     setEventHandlers(game){
         this.socket.on('connect', () => {
@@ -80,10 +80,12 @@ class Game {
             this.socket.on('kill_player', (user) => {
                 if(this.player.id == user.id) {
                     this.player.sprite.kill();
-                    this.player.x = game.world.randomX;
-                    this.player.y = game.world.randomY;
-                    this.player.mass = 20;
-                    this.player.generateSprite();
+                    delete this.players[user.id];
+                    // this.game.state.start('select');
+                    // this.player.x = game.world.randomX;
+                    // this.player.y = game.world.randomY;
+                    // this.player.mass = 20;
+                    // this.player.generateSprite();
                 }
             });
 
@@ -91,6 +93,19 @@ class Game {
                 this.players[id].sprite.kill();
                 delete this.players[id];
             });
+/*
+            // server events
+            this.socket.on('use_item', user, item => {
+                console.log("item "+item.id);
+                if(item.id == 'inc_num'){
+                    this.players[user.id].num = this.players[user.id].num + item.inc_num;
+                }else if(item.id == 'half_speed'){
+                    this.players[user.id].speedX = this.players[user.id].speedX/2
+                    this.players[user.id].speedY = this.players[user.id].speedY/2
+                    this.players[user.id].speed = this.players[user.id].speed/2
+                }
+            });
+            */
         });
     }
 
