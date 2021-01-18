@@ -3,6 +3,7 @@
 import Enemy from 'scripts/class/enemy';
 import Player from 'scripts/class/player';
 import Items from 'scripts/class/items';
+import Particles from 'scripts/class/particles';
 
 class Game {
     create(game) {
@@ -10,6 +11,7 @@ class Game {
         this.socket = io.connect(window.location.host);
         this.players = [];
         this.items = [];
+        this.particles = [];
 
         this.color = ['#999999', '#CCCCCC', '#00FF00', '#0000FF', '#FF0000', '#FFFF00'];
 
@@ -26,7 +28,8 @@ class Game {
         var groupPlayer = game.physics.p2.createCollisionGroup();
         var groupPlayers = game.physics.p2.createCollisionGroup();
         var groupItem = game.physics.p2.createCollisionGroup();
-        this.groupColision = [groupPlayer, groupPlayers, groupItem];
+        var groupParticle = game.physics.p2.createCollisionGroup();
+        this.groupColision = [groupPlayer, groupPlayers, groupItem, groupParticle];
         game.physics.p2.updateBoundsCollisionGroup();
 
         this.groupItems = game.add.group();
@@ -36,6 +39,10 @@ class Game {
         this.groupEnemy = game.add.group();
         this.groupEnemy.enableBody = true;
         this.groupEnemy.physicsBodyType = Phaser.Physics.P2JS;
+
+        this.groupParticles = game.add.group();
+        this.groupParticles.enableBody = true;
+        this.groupParticles.physicsBodyType = Phaser.Physics.P2JS;
 
         this.setEventHandlers(game);
 
@@ -63,6 +70,16 @@ class Game {
 
             this.socket.on('update_items', (item) => {
                 this.items[item.id].move(item);
+            });
+
+            this.socket.on('getParticles', (particles) => {
+                for (var particle of particles) {
+                    this.particles[particle.id] = new Particles(game, particle, this.groupColision);
+                }
+            });
+
+            this.socket.on('update_particles', (particle) => {
+                this.particles[particle.id].move(particle);
             });
 
             // new player
@@ -93,19 +110,6 @@ class Game {
                 this.players[id].sprite.kill();
                 delete this.players[id];
             });
-/*
-            // server events
-            this.socket.on('use_item', user, item => {
-                console.log("item "+item.id);
-                if(item.id == 'inc_num'){
-                    this.players[user.id].num = this.players[user.id].num + item.inc_num;
-                }else if(item.id == 'half_speed'){
-                    this.players[user.id].speedX = this.players[user.id].speedX/2
-                    this.players[user.id].speedY = this.players[user.id].speedY/2
-                    this.players[user.id].speed = this.players[user.id].speed/2
-                }
-            });
-            */
         });
     }
 

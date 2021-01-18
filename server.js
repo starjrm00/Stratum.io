@@ -8,10 +8,12 @@ app.get('/', function(req, res){
     res.sendfile(__dirname + '/client/index.html');
 });
 
-var color = ['#999999', '#CCCCCC', '#00FF00', '#0000FF', '#FF0000', '#FFFF00'];
+var color = ['#999999', '#CCCCCC', '#00FF00', '#0000FF', '#FF0000', '#FFFF00', '#E6E6E6'];      //마지막 색은 장애물 색
 var users = [];
 var nbItem = 80;
 var items = [];
+var nbParticle = 10;
+var particles = [];
 
 for (var i = 0; i < nbItem; i++)
 {
@@ -54,6 +56,18 @@ for (var i = 0; i < nbItem; i++)
     }
 }
 
+for (var i = 0; i < nbParticle; i++)
+{
+    particles[i] = {
+        x: randomIntInc(0, 3000),
+        y: randomIntInc(0, 3000),
+        color: color[6],
+        id: i,
+        mass: 1
+    };
+}
+
+
 io.on('connection', function(socket){
     var me = false;
     /*
@@ -91,6 +105,7 @@ io.on('connection', function(socket){
     socket.on('new_player', function(user){
         me = user;
         socket.emit('getItems', items);
+        socket.emit('getParticles', particles)
 
         for (var k in users){
             socket.emit('new_player', users[k]);
@@ -110,6 +125,17 @@ io.on('connection', function(socket){
             inc_num: 30
         };
         io.emit('update_items', items[id]);
+    });
+
+    socket.on('update_particles', function(id){
+        particles[id] = {
+            x: randomIntInc(0, 3000),
+            y: randomIntInc(0, 3000),
+            color: color[6],
+            id: id,
+            mass: 1
+        };
+        io.emit('update_particles', particles[id]);
     });
 
     socket.on('move_player', function(user){

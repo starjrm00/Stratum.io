@@ -23,8 +23,6 @@ class Player {
         this.char = game.char;
         this.time = 180;
 
-        //this.game.char = game.char
-
         this.generateSprite();
     }
 
@@ -35,8 +33,6 @@ class Player {
         this.sprite = this.game.add.sprite(this.x, this.y, bmd);
         this.game.physics.p2.enable(this.sprite, Phaser.Physics.ARCADE);
 
-        // if(this.char == 1) this.setColision();
-        // else if(this.char == 2) this.setSquareColision();
         this.setColision();
 
         this.sprite.id = this.id;
@@ -96,6 +92,7 @@ class Player {
         this.sprite.body.setCollisionGroup(this.groupColision[0]);
         this.sprite.body.collides(this.groupColision[1], this.enemyCallback, this);
         this.sprite.body.collides(this.groupColision[2], this.itemsCallback, this);
+        this.sprite.body.collides(this.groupColision[3], this.particlesCallback, this);
     }
 
     enemyCallback(body1, body2){
@@ -169,6 +166,24 @@ class Player {
 
             body2.sprite.kill();
             this.socket.emit('update_items', body2.sprite.id);
+        }
+    }
+
+    particlesCallback(body1, body2){
+        if(body2.sprite.alive){
+            this.num = this.sprite.num;
+            this.speed = -this.sprite.speed;
+            this.speedX = -this.sprite.speedX;
+            this.speedY = -this.sprite.speedY;
+            this.x = this.sprite.x;
+            this.y = this.sprite.y;
+            this.time = this.sprite.time;
+
+            this.sprite.kill();
+            this.generateSprite();
+
+            body2.sprite.kill();
+            this.socket.emit('update_particles', body2.sprite.id);
         }
     }
 
