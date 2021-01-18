@@ -14,8 +14,8 @@ class Player {
         this.num_mult = 0.3;
         this.mass = 20;
         this.speed_max = 400;
-        this.speed_X = 0;
-        this.speed_Y = 0;
+        this.speedX = 0;
+        this.speedY = 0;
         this.acc = 5;
         this.speed = 0;
         this.x = this.game.world.randomX;
@@ -44,8 +44,8 @@ class Player {
         this.sprite.num_mult = this.num_mult;
         this.sprite.mass = this.mass;
         this.sprite.speed_max = this.speed_max;
-        this.sprite.speedX = this.speed_X;
-        this.sprite.speedY = this.speed_Y;
+        this.sprite.speedX = this.speedX;
+        this.sprite.speedY = this.speedY;
         this.sprite.acc = this.acc;
         this.sprite.speed = this.speed;
         
@@ -99,7 +99,9 @@ class Player {
     enemyCallback(body1, body2){
         if(body2.sprite.alive && ((body2.sprite.num < this.sprite.num && this.sprite.num < body2.sprite.num*100) || (this.sprite.num *1000 < body2.sprite.num))){
             this.num += Math.floor(body2.sprite.num * body2.sprite.num_mult);
-            this.speed = this.sprite.speed_base / this.sprite.mass;
+            this.speed = this.sprite.speed;
+            this.speedX = this.sprite.speedX;
+            this.speedY = this.sprite.speedY;
             this.x = this.sprite.x;
             this.y = this.sprite.y;
 
@@ -132,9 +134,10 @@ class Player {
 
     particlesCallback(body1, body2){
         if(body2.sprite.alive){
-            this.mass += body2.sprite.mass;
             this.num = this.sprite.num;
-            this.speed = this.sprite.speed_base / this.sprite.mass;
+            this.speed = this.sprite.speed;
+            this.speedX = this.sprite.speedX;
+            this.speedY = this.sprite.speedY;
             this.x = this.sprite.x;
             this.y = this.sprite.y;
 
