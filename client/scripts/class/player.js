@@ -133,6 +133,7 @@ class Player {
     particlesCallback(body1, body2){
         if(body2.sprite.alive){
             this.mass += body2.sprite.mass;
+            this.num = this.sprite.num;
             this.speed = this.sprite.speed_base / this.sprite.mass;
             this.x = this.sprite.x;
             this.y = this.sprite.y;
