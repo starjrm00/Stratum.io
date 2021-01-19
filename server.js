@@ -51,7 +51,7 @@ for (var i = 0; i < nbItem; i++)
             color: color[randomIntInc(0, 5)],
             id: i,
             effect: "dec_mass",
-            dec_mass: 0.9
+            dec_mass: 0.97
         };
     }
 }
@@ -93,15 +93,16 @@ io.on('connection', function(socket){
                     console.log("id is "+id);
                 }
             }
-            item = {
+            event = {
                 id: 'inc_num',
                 inc_num: 30
             }
-            console.log(users[id]+" + ", item);
-            socket.emit('use_item', users[id], item);
+            console.log(id+" + ", event);
+            console.log(socket);
+            socket.emit('get_event', (id, event));
         }
     }
-*/
+    */
     socket.on('new_player', function(user){
         me = user;
         socket.emit('getItems', items);
