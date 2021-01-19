@@ -6,15 +6,29 @@ class Select {
 
         game.stage.backgroundColor = '#D8D8D8';
         var btn1Image = this.game.cache.getImage('btn1');
-        var btn1 = this.game.add.sprite(this.game.world.centerX-50-btn1Image.width, this.game.world.centerY-150, 'btn1', 0);
-        var btn2 = this.game.add.sprite(this.game.world.centerX+50, this.game.world.centerY-150, 'btn2', 0);
+        var btn1 = this.game.add.sprite(this.game.world.centerX-50-btn1Image.width, this.game.world.centerY-250, 'btn1', 0);
+        var btn2 = this.game.add.sprite(this.game.world.centerX+50, this.game.world.centerY-250, 'btn2', 0);
         btn1.inputEnabled = true;
         btn2.inputEnabled = true;
 
-        var text = game.add.text(game.world.centerX, game.world.centerY-200, "Select Your Character!", {
+        var text = game.add.text(game.world.centerX, game.world.centerY-300, "Select Your Character!", {
             font: "40px Arial",
             fill: "#424242",
             align: "center"
+        });
+        text.anchor.setTo(0.5, 0.5);
+
+        var state1 = game.add.text(game.world.centerX-btn1Image.width-30, game.world.centerY+120, "Max speed  : 350 \nAcceleration : 10", {
+            font: "28px Arial",
+            fill: "#424242",
+            align: "front"
+        });
+        text.anchor.setTo(0.5, 0.5);
+
+        var state2 = game.add.text(game.world.centerX+70, game.world.centerY+120, "Max speed : 300 \nAcceleration : 15", {
+            font: "28px Arial",
+            fill: "#424242",
+            align: "front"
         });
         text.anchor.setTo(0.5, 0.5);
 
