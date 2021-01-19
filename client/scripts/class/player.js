@@ -21,7 +21,7 @@ class Player {
         this.x = this.game.world.randomX;
         this.y = this.game.world.randomY;
         this.char = game.char;
-        this.time = 180;
+        this.time = 18000;
 
         this.generateSprite();
     }
@@ -114,6 +114,7 @@ class Player {
     }
 
     enemyCallback(body1, body2){
+        alert("enemyCallBack");
         if(body2.sprite.alive && ((body2.sprite.num < this.sprite.num && this.sprite.num < body2.sprite.num*100) || (this.sprite.num *1000 < body2.sprite.num))){
             this.num = this.num + Math.floor(body2.sprite.num * body2.sprite.num_mult);
             this.speed = this.sprite.speed;
@@ -122,6 +123,7 @@ class Player {
             this.x = this.sprite.x;
             this.y = this.sprite.y;
             this.time = this.sprite.time;
+            this.sprite.text.destroy()
 
             this.sprite.kill();
             this.generateSprite();
@@ -147,6 +149,7 @@ class Player {
                 time: body2.sprite.time,
                 text: body2.sprite.text
             };
+            alert("enemy hear")
 
             body2.sprite.kill();
             this.socket.emit('kill_player', enemy);
@@ -158,6 +161,7 @@ class Player {
     }
 
     itemsCallback(body1, body2){
+        alert("itemCallBack");
         if(body2.sprite.alive){
             this.num = this.sprite.num;
             this.speed = this.sprite.speed;
@@ -190,6 +194,7 @@ class Player {
     }
 
     particlesCallback(body1, body2){
+        alert("particleCallBack");
         if(body2.sprite.alive){
             this.num = this.sprite.num;
             this.speed = this.sprite.speed;
@@ -256,7 +261,6 @@ class Player {
             else{ 
                 this.move(game, 0);
             }
-//            this.keyLock == true
         } 
         else {
             this.timer.loop(3000, this.OffSpaceTimer(), this);

@@ -11,9 +11,12 @@ class Particles {
     }
 
     generateSprite(){
-        var bmd = this.generateCircle(this.particle.color);
+        this.sprite = this.game.add.sprite(this.particle.x, this.particle.y, 'start1');
+        this.sprite.anchor.setTo(0.5, 0.5)
 
-        this.sprite = this.game.add.sprite(this.particle.x, this.particle.y, bmd);
+        //var bmd = this.generateCircle(this.particle.color);
+        //this.sprite = this.game.add.sprite(this.particle.x, this.particle.y, bmd);
+        
         this.game.physics.p2.enable(this.sprite, false);
 
         this.setColision();
@@ -37,7 +40,7 @@ class Particles {
         this.sprite.body.setCircle(this.sprite.width / 2);
         this.sprite.body.fixedRotation = false;
         this.sprite.body.setCollisionGroup(this.groupColision[3]);
-        this.sprite.body.collides([this.groupColision[0], this.groupColision[1], this.groupColision[2]]);
+        this.sprite.body.collides([this.groupColision[0], this.groupColision[1]]);
     }
 
     move(particle){

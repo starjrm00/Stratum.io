@@ -25,6 +25,8 @@ class Preload {
 
         this.game.load.spritesheet('btn1', 'assets/circle.png', 1000, 1000)
         this.game.load.spritesheet('btn2', 'assets/square.png', 1000, 1000)
+        this.game.load.spritesheet('start1', 'assets/particle1.png', 1000, 1000)
+
 
 
         game.time.advancedTiming = true;
