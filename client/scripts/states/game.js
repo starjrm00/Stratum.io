@@ -94,14 +94,15 @@ class Game {
             });
 
             this.socket.on('kill_player', (user) => {
-                alert("game kill")
                 if(this.player.id == user.id) {
+                    this.player.sprite.text.destroy();
                     this.player.sprite.kill();
                     this.player.x = game.world.randomX;
                     this.player.y = game.world.randomY;
                     this.player.mass = 20;
                     this.player.generateSprite();
                 }
+
             });
 
             this.socket.on('logout', (id) => {

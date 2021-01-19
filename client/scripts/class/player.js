@@ -122,7 +122,7 @@ class Player {
             this.x = this.sprite.x;
             this.y = this.sprite.y;
             this.time = this.sprite.time;
-            this.sprite.text.destroy()
+            this.sprite.text.destroy();
 
             this.sprite.kill();
             this.generateSprite();
@@ -131,28 +131,21 @@ class Player {
                 id: body2.sprite.id,
                 username: body2.sprite.username,
                 speed: body2.sprite.speed,
-                speed_max: body2.sprite.speed_max,
-                speedX: body2.sprite.speedX,
-                speedY: body2.sprite.speedY,
-                acc: body2.sprite.acc,
-                num: body2.sprite.num,
-                num_mult: body2.sprite.num_mult,
-                color: body2.sprite.color,
                 mass: body2.sprite.mass,
+                color: body2.sprite.color,
                 x: body2.sprite.x,
                 y: body2.sprite.y,
                 height: body2.sprite.height,
                 width: body2.sprite.width,
-                killed: body2.sprite.killed,
-                char: body2.sprite.char,    //
-                time: body2.sprite.time,
-                text: body2.sprite.text
+                killed: body2.sprite.killed
             };
-
+            body2.sprite.text.destroy();
             body2.sprite.kill();
             this.socket.emit('kill_player', enemy);
         }
         else if(this.sprite.alive && ((this.sprite.num < body2.sprite.num && body2.sprite.num < this.sprite.num*100)||(body2.sprite.num * 1000 < this.sprite.num))){
+            //alert("hear2")
+            this.sprite.text.destroy();
             this.sprite.kill();
             this.socket.emit('kill_player', this.toJson());
         }

@@ -40,7 +40,7 @@ class Particles {
         this.sprite.body.setCircle(this.sprite.width / 2);
         this.sprite.body.fixedRotation = false;
         this.sprite.body.setCollisionGroup(this.groupColision[3]);
-        this.sprite.body.collides([this.groupColision[0], this.groupColision[1]]);
+        this.sprite.body.collides([this.groupColision[0], this.groupColision[1], this.groupColision[2]]);
     }
 
     move(particle){
