@@ -110,6 +110,14 @@ class Game {
                 this.players[id].sprite.kill();
                 delete this.players[id];
             });
+            /*
+            this.socket.on('get_event', (user_id, event) => {
+                if(event.id == 'inc_num'){
+                    this.players[id].num = this.players[id].num + event.inc_num;
+                    this.players[id].sprite.num = this.players[id].sprite.num + event.inc_num;
+                }
+            });
+            */
         });
     }
 

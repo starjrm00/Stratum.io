@@ -192,7 +192,7 @@ class Player {
     particlesCallback(body1, body2){
         if(body2.sprite.alive){
             this.num = this.sprite.num;
-            this.speed = -this.sprite.speed;
+            this.speed = this.sprite.speed;
             this.speedX = -this.sprite.speedX;
             this.speedY = -this.sprite.speedY;
             this.x = this.sprite.x;
