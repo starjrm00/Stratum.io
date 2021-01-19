@@ -21,36 +21,48 @@ for (var i = 0; i < nbItem; i++)
         items[i] = {
             x: randomIntInc(0, 3000),
             y: randomIntInc(0, 3000),
-            color: color[randomIntInc(0, 5)],
+            color: color[0],
             id: i,
             effect: "inc_num",
-            inc_num: 30
+            inc_num: 30,
+            inc_sp_m: 3,
+            inc_acc_m: 3,
+            dec_mass: 0.97
         };
     }else if(i*4 < nbItem*2){
         items[i] = {
             x: randomIntInc(0, 3000),
             y: randomIntInc(0, 3000),
-            color: color[randomIntInc(0, 5)],
+            color: color[1],
             id: i,
             effect: "inc_sp_m",
-            inc_sp_m: 3
+            inc_num: 30,
+            inc_sp_m: 3,
+            inc_acc_m: 3,
+            dec_mass: 0.97
         };
     }else if(i*4 < nbItem*3){
         items[i] = {
             x: randomIntInc(0, 3000),
             y: randomIntInc(0, 3000),
-            color: color[randomIntInc(0, 5)],
+            color: color[2],
             id: i,
             effect: "inc_acc_m",
-            inc_acc_m: 3
+            inc_num: 30,
+            inc_sp_m: 3,
+            inc_acc_m: 3,
+            dec_mass: 0.97
         };
     }else{
         items[i] = {
             x: randomIntInc(0, 3000),
             y: randomIntInc(0, 3000),
-            color: color[randomIntInc(0, 5)],
+            color: color[3],
             id: i,
             effect: "dec_mass",
+            inc_num: 30,
+            inc_sp_m: 3,
+            inc_acc_m: 3,
             dec_mass: 0.97
         };
     }
@@ -117,14 +129,36 @@ io.on('connection', function(socket){
     });
 
     socket.on('update_items', function(id){
+        var item_id
+        if(id*4 < nbItem){
+            item_id = 0;
+        }else if(id*4 < nbItem*2){
+            item_id = 1;
+        }else if(id*4 < nbItem*3){
+            item_id = 2;
+        }else{
+            item_id = 3;
+        }
         items[id] = {
             x: randomIntInc(0, 3000),
             y: randomIntInc(0, 3000),
-            color: color[randomIntInc(0, 5)],
+            color: color[item_id],
             id: id,
             effect: "inc_num",
-            inc_num: 30
+            inc_num: 30,
+            inc_sp_m: 3,
+            inc_acc_m: 3,
+            dec_mass: 0.97
         };
+        if(id*4 < nbItem){
+            items[id].effect = "inc_num"
+        }else if(id*4 < nbItem*2){
+            items[id].effect = "inc_sp_m"
+        }else if(id*4 < nbItem*3){
+            items[id].effect = "inc_acc_m"
+        }else{
+            items[id].effect = "dec_mass"
+        }
         io.emit('update_items', items[id]);
     });
 
