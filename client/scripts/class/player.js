@@ -21,7 +21,7 @@ class Player {
         this.x = this.game.world.randomX;
         this.y = this.game.world.randomY;
         this.char = game.char;
-        this.time = 100;
+        this.time = 50;
 
         this.generateSprite();
     }
@@ -266,7 +266,7 @@ class Player {
 
     OnSpaceTimer(){
         if(this.sprite.time > -1000) this.sprite.time --;
-        else if(this.sprite.time <= -1000) this.sprite.time = 100;
+        else if(this.sprite.time <= -1000) this.sprite.time = 50;
     }
 
     OffSpaceTimer(){

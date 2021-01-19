@@ -19,8 +19,8 @@ for (var i = 0; i < nbItem; i++)
 {
     if(i*4 < nbItem){
         items[i] = {
-            x: randomIntInc(0, 3000),
-            y: randomIntInc(0, 3000),
+            x: randomIntInc(0, 5000),
+            y: randomIntInc(0, 5000),
             color: color[0],
             id: i,
             effect: "inc_num",
@@ -31,8 +31,8 @@ for (var i = 0; i < nbItem; i++)
         };
     }else if(i*4 < nbItem*2){
         items[i] = {
-            x: randomIntInc(0, 3000),
-            y: randomIntInc(0, 3000),
+            x: randomIntInc(0, 5000),
+            y: randomIntInc(0, 5000),
             color: color[1],
             id: i,
             effect: "inc_sp_m",
@@ -43,8 +43,8 @@ for (var i = 0; i < nbItem; i++)
         };
     }else if(i*4 < nbItem*3){
         items[i] = {
-            x: randomIntInc(0, 3000),
-            y: randomIntInc(0, 3000),
+            x: randomIntInc(0, 5000),
+            y: randomIntInc(0, 5000),
             color: color[2],
             id: i,
             effect: "inc_acc_m",
@@ -55,8 +55,8 @@ for (var i = 0; i < nbItem; i++)
         };
     }else{
         items[i] = {
-            x: randomIntInc(0, 3000),
-            y: randomIntInc(0, 3000),
+            x: randomIntInc(0, 5000),
+            y: randomIntInc(0, 5000),
             color: color[3],
             id: i,
             effect: "dec_mass",
@@ -71,8 +71,8 @@ for (var i = 0; i < nbItem; i++)
 for (var i = 0; i < nbParticle; i++)
 {
     particles[i] = {
-        x: randomIntInc(0, 3000),
-        y: randomIntInc(0, 3000),
+        x: randomIntInc(0, 5000),
+        y: randomIntInc(0, 5000),
         color: color[6],
         id: i,
         mass: 1
@@ -140,8 +140,8 @@ io.on('connection', function(socket){
             item_id = 3;
         }
         items[id] = {
-            x: randomIntInc(0, 3000),
-            y: randomIntInc(0, 3000),
+            x: randomIntInc(0, 5000),
+            y: randomIntInc(0, 5000),
             color: color[item_id],
             id: id,
             effect: "inc_num",
@@ -164,8 +164,8 @@ io.on('connection', function(socket){
 
     socket.on('update_particles', function(id){
         particles[id] = {
-            x: randomIntInc(0, 3000),
-            y: randomIntInc(0, 3000),
+            x: randomIntInc(0, 5000),
+            y: randomIntInc(0, 5000),
             color: color[6],
             id: id,
             mass: 1
