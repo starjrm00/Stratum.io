@@ -21,35 +21,53 @@ class Player {
         this.x = this.game.world.randomX;
         this.y = this.game.world.randomY;
         this.char = game.char;
-        this.time = 180;
+        this.time = 18000;
 
         this.generateSprite();
     }
 
     generateSprite(){
-        if(this.char == 1) var bmd = this.generateCircle(this.color);
-        else if(this.char == 2) var bmd = this.generateSquare(this.color);
+        if(this.char == 1){
+            var bmd = this.generateCircle(this.color);
+
+        }
+        else if(this.char == 2){
+            var bmd = this.generateSquare(this.color);
+        }
 
         this.sprite = this.game.add.sprite(this.x, this.y, bmd);
         this.game.physics.p2.enable(this.sprite, Phaser.Physics.ARCADE);
 
         this.setColision();
 
+        if(this.char == 1){
+            this.sprite.acc = 10;
+            this.sprite.speed_max = 350;
+
+        }
+        else if(this.char == 2){
+            this.sprite.acc = 15;
+            this.sprite.speed_max = 300;
+        }
+
         this.sprite.id = this.id;
         this.sprite.color = this.color;
         this.sprite.num = this.num;
         this.sprite.num_mult = this.num_mult;
         this.sprite.mass = this.mass;
-        this.sprite.speed_max = this.speed_max;
         this.sprite.speedX = this.speedX;
         this.sprite.speedY = this.speedY;
-        this.sprite.acc = this.acc;
         this.sprite.speed = this.speed;
-        
+
         this.sprite.char = this.char;    //
         this.sprite.time = this.time;
 
         this.game.camera.follow(this.sprite);
+
+        this.sprite.inputEnabled = true;
+        var style = { font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: this.sprite.width, align: "center"};
+        this.sprite.text = this.game.add.text( 0,0, this.sprite.num, style);
+        this.sprite.text.anchor.set(0.5);
     }
 
     generateColor(){
@@ -104,6 +122,7 @@ class Player {
             this.x = this.sprite.x;
             this.y = this.sprite.y;
             this.time = this.sprite.time;
+            this.sprite.text.destroy()
 
             this.sprite.kill();
             this.generateSprite();
@@ -126,7 +145,8 @@ class Player {
                 width: body2.sprite.width,
                 killed: body2.sprite.killed,
                 char: body2.sprite.char,    //
-                time: body2.sprite.time
+                time: body2.sprite.time,
+                text: body2.sprite.text
             };
 
             body2.sprite.kill();
@@ -147,6 +167,7 @@ class Player {
             this.x = this.sprite.x;
             this.y = this.sprite.y;
             this.time = this.sprite.time;
+            this.sprite.text.destroy()
 
             if(body2.sprite.effect == "inc_num"){
                 this.num = this.num + body2.sprite.inc_num;
@@ -178,6 +199,7 @@ class Player {
             this.x = this.sprite.x;
             this.y = this.sprite.y;
             this.time = this.sprite.time;
+            this.sprite.text.destroy()
 
             this.sprite.kill();
             this.generateSprite();
@@ -207,10 +229,14 @@ class Player {
             killed: this.sprite.killed,
             char: this.sprite.char,      //
             time: this.sprite.time
+
         };
     }
 
     update(game){
+
+        this.updateText();
+
         var EKey = game.input.keyboard.addKey(Phaser.Keyboard.E);
         var SpaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         //this.input.keyboard.on('keyup', this.unlock.bind(this))
@@ -231,7 +257,6 @@ class Player {
             else{ 
                 this.move(game, 0);
             }
-//            this.keyLock == true
         } 
         else {
             this.timer.loop(3000, this.OffSpaceTimer(), this);
@@ -246,11 +271,17 @@ class Player {
 
     OnSpaceTimer(){
         if(this.sprite.time > -1000) this.sprite.time --;
-        else if(this.sprite.time <= -1000) this.sprite.time = 180
+        else if(this.sprite.time <= -1000) this.sprite.time = 180;
     }
 
     OffSpaceTimer(){
         if(this.sprite.time > -1000) this.sprite.time --;
+    }
+
+    updateText(){
+        this.sprite.text.setText(this.sprite.num);
+        this.sprite.text.x =  this.sprite.x;
+        this.sprite.text.y = this.sprite.y+this.sprite.height;
     }
 
 
@@ -319,7 +350,7 @@ class Player {
         game.debug.text('speedX: ' + this.sprite.speedX, 32, 120);
         game.debug.text('speedY: ' + this.sprite.speedY, 32, 160);
         game.debug.text('speed: ' + this.sprite.speed, 32, 180);
-        game.debug.text(this.sprite.num, this.sprite.x - game.camera.x - 10, this.sprite.y - game.camera.y+ 5);
+        //game.debug.text(this.sprite.num, this.sprite.x - game.camera.x - 10, this.sprite.y - game.camera.y+ 5);
         this.socket.emit('move_player', this.toJson());
     }
 

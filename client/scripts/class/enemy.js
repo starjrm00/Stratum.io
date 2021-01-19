@@ -31,6 +31,11 @@ class Enemy {
         this.sprite.speed = this.enemy.speed;
         this.sprite.width = this.enemy.width;
         this.sprite.height = this.enemy.height;
+
+        this.sprite.inputEnabled = true;
+        var style = { font: "16px Arial", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: this.sprite.width, align: "center"};
+        this.sprite.text = this.game.add.text( this.sprite.x, this.sprite.y+this.sprite.height, this.sprite.num, style);
+        this.sprite.text.anchor.set(0.5);
     }
 
     generateCircle(color){
@@ -58,10 +63,11 @@ class Enemy {
         this.sprite.body.setCircle(this.sprite.width / 2);
         this.sprite.body.fixedRotation = false;
         this.sprite.body.setCollisionGroup(this.groupColision[1]);
-        this.sprite.body.collides([this.groupColision[0], this.groupColision[1], this.groupColision[2]]);
+        this.sprite.body.collides([this.groupColision[0], this.groupColision[2], this.groupColision[3]]);
     }
 
     move(enemy){
+        this.sprite.text.destroy();
         if(this.sprite.alive){
             this.sprite.kill();
         }

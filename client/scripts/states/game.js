@@ -49,7 +49,6 @@ class Game {
         // this.timer = this.game.time.create(false);
         // this.timer.loop(2500, this.giveNum, this);
         // this.timer.start();
-
     }
 
     // giveNum(){
@@ -95,14 +94,13 @@ class Game {
             });
 
             this.socket.on('kill_player', (user) => {
+                alert("game kill")
                 if(this.player.id == user.id) {
                     this.player.sprite.kill();
-                    delete this.players[user.id];
-                    // this.game.state.start('select');
-                    // this.player.x = game.world.randomX;
-                    // this.player.y = game.world.randomY;
-                    // this.player.mass = 20;
-                    // this.player.generateSprite();
+                    this.player.x = game.world.randomX;
+                    this.player.y = game.world.randomY;
+                    this.player.mass = 20;
+                    this.player.generateSprite();
                 }
             });
 
@@ -110,14 +108,6 @@ class Game {
                 this.players[id].sprite.kill();
                 delete this.players[id];
             });
-            /*
-            this.socket.on('get_event', (user_id, event) => {
-                if(event.id == 'inc_num'){
-                    this.players[id].num = this.players[id].num + event.inc_num;
-                    this.players[id].sprite.num = this.players[id].sprite.num + event.inc_num;
-                }
-            });
-            */
         });
     }
 
@@ -128,8 +118,6 @@ class Game {
 
         game.debug.cameraInfo(game.camera, 32, 32);
         game.debug.text('fps: '+ game.time.fps || '--', 32, 140);
-
-        //game.world.scale.set(1);
     }
 }
 
