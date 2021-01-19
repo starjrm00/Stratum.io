@@ -1,8 +1,8 @@
-import Boot from 'scripts/states/boot';
-import Preload from 'scripts/states/preload';
-import Menu from 'scripts/states/menu';
-import Game from 'scripts/states/game';
-import Select from 'scripts/states/select';
+import Boot from './states/boot';
+import Preload from './states/preload';
+import Menu from './states/menu';
+import Game from './states/game';
+import Select from './states/select';
 
 class Games extends Phaser.Game {
     constructor() {
