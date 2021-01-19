@@ -58,6 +58,8 @@ class Player {
         this.sprite.speedX = this.speedX;
         this.sprite.speedY = this.speedY;
         this.sprite.speed = this.speed;
+        this.sprite.speed_max = this.speed_max;
+        this.sprite.acc = this.acc;
 
         this.sprite.char = this.char;    //
         this.sprite.time = this.time;
