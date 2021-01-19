@@ -114,7 +114,6 @@ class Player {
     }
 
     enemyCallback(body1, body2){
-        alert("enemyCallBack");
         if(body2.sprite.alive && ((body2.sprite.num < this.sprite.num && this.sprite.num < body2.sprite.num*100) || (this.sprite.num *1000 < body2.sprite.num))){
             this.num = this.num + Math.floor(body2.sprite.num * body2.sprite.num_mult);
             this.speed = this.sprite.speed;
@@ -149,7 +148,6 @@ class Player {
                 time: body2.sprite.time,
                 text: body2.sprite.text
             };
-            alert("enemy hear")
 
             body2.sprite.kill();
             this.socket.emit('kill_player', enemy);
@@ -161,7 +159,6 @@ class Player {
     }
 
     itemsCallback(body1, body2){
-        alert("itemCallBack");
         if(body2.sprite.alive){
             this.num = this.sprite.num;
             this.speed = this.sprite.speed;
@@ -194,7 +191,6 @@ class Player {
     }
 
     particlesCallback(body1, body2){
-        alert("particleCallBack");
         if(body2.sprite.alive){
             this.num = this.sprite.num;
             this.speed = this.sprite.speed;
