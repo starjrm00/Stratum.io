@@ -1,6 +1,3 @@
-/**
- * Created by viller_m on 19/05/15.
- */
 class Enemy {
     constructor(game, enemy, groupColision) {
         this.game = game;

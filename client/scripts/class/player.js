@@ -1,6 +1,3 @@
-/**
- * Created by viller_m on 19/05/15.
- */
 class Player {
     constructor(game, socket, groupColision) {
 
